@@ -60,7 +60,7 @@ function renderProducts(){
    '<div class="product-image">'+image+'<span class="product-badge">'+(p.demo?'PRODUTO FICTÍCIO':'OFERTA VALIDADA')+'</span></div>'+
    '<div class="product-body"><div class="card-brand">'+esc(p.brand||'Marca não indicada')+'</div><h4 class="card-title">'+esc(p.title)+'</h4>'+
    '<div class="card-specs">'+specs+'</div><div class="card-price-wrap"><div><small class="price-note">'+(p.demo?'Preço meramente ilustrativo':'Preço do anunciante')+'</small><strong class="card-price">'+esc(formatPrice(p))+'</strong></div><span class="merchant-line">'+esc(p.merchant)+'</span></div>'+
-   '<div class="product-actions"><button class="compare-button" type="button" data-add="'+esc(p.id)+'" aria-pressed="'+chosen+'">'+(chosen?'✓ Adicionado':'＋ Adicionar à comparação')+'</button>'+link+'</div></div></article>';
+   '<div class="product-actions"><button class="compare-button" type="button" data-add="'+esc(p.id)+'" aria-pressed="'+chosen+'">'+(chosen?'✓ Adicionado':'+ Adicionar à comparação')+'</button>'+link+'</div></div></article>';
  }).join('');
 }
 function compareSelected(){return [...state.selected.values()];}

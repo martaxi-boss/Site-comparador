@@ -1,7 +1,7 @@
 /* Interface pública: API de pesquisa paginada. Sem acesso a credenciais, nem links em demo. */
 const $=id=>document.getElementById(id);
 const money=new Intl.NumberFormat('pt-PT',{style:'currency',currency:'EUR'});
-const state={source:'amazon',mode:'demo',q:'',category:'',sort:'recommended',page:1,limit:12,items:[],categories:[],total:0,pages:1,selected:new Map(),pending:0};
+const state={source:'auto',resolvedSource:'amazon',mode:'demo',q:'',category:'',sort:'recommended',page:1,limit:12,items:[],categories:[],total:0,pages:1,selected:new Map(),pending:0};
 let toastTimer=null;let debounceTimer=null;
 const icons={telemoveis:'📱',tablets:'▤',smartwatches:'⌚',audio:'🎧',portateis:'💻',monitores:'🖥️',fritadeiras:'🍳',aspiradores:'◉','cuidados-pessoais':'✂️',ferramentas:'🛠️','desporto-acessorios':'🚴'};
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -40,7 +40,7 @@ function renderCategoryFilters(){
 }
 function updateSources(){
  for(const key of ['amazon','awin']){
-  const b=$('source-'+key),active=state.source===key;
+  const b=$('source-'+key),active=(state.source==='auto'?state.resolvedSource:state.source)===key;
   b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
  }
  $('demo-toolbar').hidden=state.mode!=='demo';
@@ -105,6 +105,7 @@ async function load(){
   ]);
   if(ticket!==state.pending)return;
   state.mode=products.mode;
+  state.resolvedSource=products.source;
   state.categories=categories.categories;
   state.items=products.items;
   state.total=products.total;state.pages=products.pages;

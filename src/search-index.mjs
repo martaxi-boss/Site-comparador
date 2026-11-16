@@ -49,7 +49,7 @@ export class CatalogSearch {
           const details=categoryDetails(leaf);
           const item={...p,category:details.name,categoryId:leaf,parentCategoryId:details.parentId,parentCategory:details.parentName};
           const id=source+':'+p.id;
-          const terms=fold([p.title,p.brand,p.merchant,p.category,p.group,details.name,details.parentName,...Object.entries(p.specs).flatMap(([k,v])=>[k,String(v)])].join(' '));
+          const terms=fold([p.title,p.brand,p.merchant,p.category,p.group,details.name,details.parentName,...(LEAF_BY_ID.get(leaf)?.aliases||[]),...Object.entries(p.specs).flatMap(([k,v])=>[k,String(v)])].join(' '));
           add.run(id,source,leaf,details.parentId,p.title,p.brand,p.price,p.updatedAt,JSON.stringify(item));
           addDocs.run(id,terms);
           n++;

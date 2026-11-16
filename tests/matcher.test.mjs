@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalizeProductTitle, computeTitleSimilarity} from 'product-matcher';
+import {normalizeProductTitle, computeTitleSimilarity} from '../src/vendor/product-matcher.mjs';
 test('motor MIT externo normaliza títulos de produtos',()=>{
  const a=normalizeProductTitle('Lenovo IdeaPad 3 Intel i5 8GB 512GB');
  const b=normalizeProductTitle('Lenovo IdeaPad 3 Intel i5 8GB 512GB');

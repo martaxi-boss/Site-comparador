@@ -57,3 +57,48 @@ test('1000+ itens por fonte: consulta e paginação real sem carregar o JSON tod
   index.close();
  }finally{await rm(home,{recursive:true,force:true});}
 });
+
+
+test('plano B assume o catálogo Awin aprovado se Amazon não estiver ativa',async()=>{
+ const home=await mkdtemp(join(tmpdir(),'compara-fallback-'));
+ try{
+  await mkdir(join(home,'data'));
+  const demo={id:'demo-1',title:'Telemóvel de demonstração',brand:'Fictícia',category:'telemoveis',price:199,currency:'EUR'};
+  await writeFile(join(home,'data','demo-amazon.json'),JSON.stringify([demo]));
+  await writeFile(join(home,'data','demo-awin.json'),JSON.stringify([demo]));
+  const approved={id:'awin-live-1',title:'Fritadeira sem óleo da loja aprovada',brand:'Marca Teste',category:'fritadeiras',price:75,currency:'EUR',availability:'in_stock',shippingPortugal:true,affiliateApproved:true,affiliateUrl:'https://example.invalid/ref/approved',merchant:'Loja de teste'};
+  await writeFile(join(home,'data','active-awin.json'),JSON.stringify([approved]));
+  const index=await createSearch(home);
+  try{
+   assert.equal(index.resolveSource('auto'),'awin');
+   assert.equal(index.resolveSource('amazon'),'awin');
+   assert.equal(index.categories('auto').source,'awin');
+   assert.equal(index.categories('auto').mode,'live');
+   const q=index.search({source:'auto',q:'fritadeira'});
+   assert.equal(q.total,1);
+   assert.equal(q.items.length,1);
+   assert.equal(q.mode,'live');
+   assert.equal(q.items[0].canBuy,true);
+   assert.equal(index.findById('auto','demo-1'),null);
+   assert.equal(index.search({source:'amazon'}).source,'awin');
+   assert.equal(index.search({source:'amazon'}).items.some(x=>x.demo),false);
+  }finally{index.close();}
+ }finally{await rm(home,{recursive:true,force:true});}
+});
+test('Amazon autorizada mantém prioridade sobre o plano B, sem esconder lojas Awin autorizadas na API',async()=>{
+ const home=await mkdtemp(join(tmpdir(),'compara-preference-'));
+ try{
+  await mkdir(join(home,'data'));
+  const item={title:'Produto de teste autorizado',brand:'Marca Teste',category:'telemoveis',price:80,currency:'EUR',availability:'in_stock',shippingPortugal:true,affiliateApproved:true,affiliateUrl:'https://example.invalid/track'};
+  await writeFile(join(home,'data','demo-amazon.json'),'[]');
+  await writeFile(join(home,'data','demo-awin.json'),'[]');
+  await writeFile(join(home,'data','active-amazon.json'),JSON.stringify([{...item,id:'a1'}]));
+  await writeFile(join(home,'data','active-awin.json'),JSON.stringify([{...item,id:'b1'}]));
+  const index=await createSearch(home);
+  try{
+   assert.equal(index.resolveSource('auto'),'amazon');
+   assert.equal(index.search({source:'auto'}).items[0].id,'a1');
+   assert.equal(index.search({source:'awin'}).items[0].id,'b1');
+  }finally{index.close();}
+ }finally{await rm(home,{recursive:true,force:true});}
+});

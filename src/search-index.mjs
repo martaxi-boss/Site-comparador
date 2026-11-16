@@ -16,7 +16,7 @@ function ftsExpression(value) {
   return tokenizeQuery(value).map(t=>'"'+t.replace(/"/g,'')+'"*').join(' AND ');
 }
 const SORTS=Object.freeze({
-  recommended:'e.title COLLATE NOCASE ASC, e.price ASC',
+  recommended:"CASE e.category WHEN 'telemoveis' THEN 1 WHEN 'fritadeiras' THEN 2 WHEN 'smartwatches' THEN 3 WHEN 'aspiradores' THEN 4 WHEN 'audio' THEN 5 WHEN 'portateis' THEN 6 WHEN 'tablets' THEN 7 WHEN 'cuidados-pessoais' THEN 8 WHEN 'monitores' THEN 9 WHEN 'ferramentas' THEN 10 ELSE 11 END, e.price ASC, e.title ASC",
   'price-asc':'(e.price IS NULL) ASC, e.price ASC, e.title ASC',
   'price-desc':'(e.price IS NULL) ASC, e.price DESC, e.title ASC',
   name:'e.title COLLATE NOCASE ASC',

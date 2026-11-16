@@ -1,6 +1,6 @@
 # Compara+PT — comparador independente para Portugal
 
-**Estado: versão 0.2 de demonstração publicada e verificada em https://comparador-teste.duckdns.org/ (16/11/2026), sem comissões e sem ofertas reais.** A revisão de código efetivamente implantada é `b4b3904af07508c6f6eaed8ecc7c8cfece6ebb22`. O nome comercial e a marca são provisórios.
+**Estado: versão 0.2.1 de demonstração publicada e verificada em https://comparador-teste.duckdns.org/ (16/11/2026), sem comissões e sem ofertas reais.** A revisão de código efetivamente implantada é `0428c143abeea16cfcffd8c16d3153bdbce4896c`. O nome comercial e a marca são provisórios.
 
 ## O que existe na versão 0.2
 
@@ -107,7 +107,7 @@ Site-comparador/
 - Repositório público e pasta isolada no servidor: `/srv/projects/Site-comparador/`.
 - O runtime Node da aplicação deve permanecer privado no projeto e não reutilizar executáveis de outras aplicações.
 - Ambiente de demonstração: `noindex`, `robots.txt` a bloquear robôs e **nenhum botão ativo de compra**.
-- A versão 0.2 foi instalada por [GitHub Actions #43920629896](https://github.com/martaxi-boss/VPS/actions/runs/43920629896), com verificação real de HTTPS, endpoint de pesquisa, categorias, saúde e manutenção de Low Cost Europa e Sexshop. A versão anterior continua guardada para rollback. O teste de interface no PR foi [#43920194011](https://github.com/martaxi-boss/Site-comparador/actions/runs/43920194011).
+- A versão 0.2.1 foi instalada por [GitHub Actions #43922970760](https://github.com/martaxi-boss/VPS/actions/runs/43922970760), com verificação real de HTTPS, endpoint de pesquisa, categorias, saúde e manutenção de Low Cost Europa e Sexshop. A revisão anterior `a556d0887d3cb39673564cc724d53fd1c91e4bb8` continua guardada para rollback. Provas finais de navegador real em [#43923204484](https://github.com/martaxi-boss/Site-comparador/actions/runs/43923204484). Ver [validação v0.2.1](docs/VALIDACAO_V021_20261116.md). O teste de interface no PR foi [#43920194011](https://github.com/martaxi-boss/Site-comparador/actions/runs/43920194011).
 - Testes de código e API no [workflow CI](.github/workflows/ci.yml). Testes de browser em PR no [workflow PR browser](.github/workflows/pr-browser-qa.yml).
 - Nenhum token de parceiro ou dados de clientes entra em repositórios públicos.
 

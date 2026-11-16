@@ -52,9 +52,13 @@ jobs:
               const health=await page.request.get(origin+'/health');
               assert.equal(health.status(),200);
               const healthData=await health.json();
-              assert.equal(healthData.version,'0.2.0');
+              assert.equal(healthData.version,'0.2.1');
               assert.equal(healthData.catalog.count.amazon,55);
               assert.equal(healthData.catalog.count.awin,55);
+              const automatic=await (await page.request.get(origin+'/api/search?source=auto&q=fritadeira')).json();
+              assert.equal(automatic.source,'amazon');
+              assert.equal(automatic.mode,'demo');
+              assert.equal(automatic.total,5);
               await page.screenshot({path:'artifacts/live-'+viewport.name+'-top.png'});
               await page.locator('#catalog-search').fill('fritadeira');
               await page.waitForFunction(()=>document.querySelectorAll('.product-card').length===5 && document.querySelector('#results-description')?.textContent.includes('fritadeira'),{timeout:15000});
@@ -71,7 +75,7 @@ jobs:
               assert.ok(dims.scroll<=dims.viewport+3,JSON.stringify(dims));
               assert.deepEqual(errors,[],JSON.stringify(errors));
               await page.screenshot({path:'artifacts/live-'+viewport.name+'-full.png',fullPage:true});
-              report.push({viewport:viewport.name,publicHttps:true,version:healthData.version,groups:6,perSourceItems:55,firstPage:12,searchResults:5,comparison:2,sourceSwitch:true,noActiveAffiliateLinks:true,noConsoleErrors:true,noOverflow:true});
+              report.push({viewport:viewport.name,publicHttps:true,version:healthData.version,groups:6,perSourceItems:55,firstPage:12,searchResults:5,comparison:2,sourceSwitch:true,automaticSource:true,noActiveAffiliateLinks:true,noConsoleErrors:true,noOverflow:true});
               await page.close();
             }
             fs.writeFileSync('artifacts/live-browser-report.json',JSON.stringify({site:origin,status:'passed',report},null,2));

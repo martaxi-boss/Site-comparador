@@ -1,4 +1,4 @@
-name: Site-comparador - build and security smoke
+name: Site-comparador - indexed catalog CI
 on:
   push:
     branches: [main]
@@ -9,27 +9,38 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 14
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate source syntax and catalog gates
+      - name: Install only pinned source dependencies in runner
         run: |
           set -euo pipefail
-          node --check server.mjs
-          node --check public/app.js
-          node --check src/catalog.mjs
-          node --check src/providers/partnerboost.mjs
-          node --check src/providers/awin.mjs
+          npm install --ignore-scripts --no-audit --no-fund
+          test -f src/vendor/product-matcher.mjs && echo PRODUCT_MATCHER_VENDOR=PASS
+      - name: Run Node syntax, tests and commercial safety gates
+        run: |
+          set -euo pipefail
+          for file in server.mjs public/pro.js src/catalog.mjs src/taxonomy.mjs src/search-index.mjs scripts/match-review.mjs src/vendor/product-matcher.mjs src/providers/*.mjs; do node --check "$file"; done
           npm test
           test -f public/robots.txt
           grep -qi 'noindex' public/index.html
           test ! -f data/active-amazon.json
           test ! -f data/active-awin.json
-          echo COMPARADOR_SOURCE_GATE=PASS
-      - name: Verify functional HTTP endpoints with simulated products
+          node scripts/match-review.mjs data/demo-amazon.json > "$RUNNER_TEMP/match-review.json"
+          node --input-type=module -e '
+          import fs from "node:fs";
+          import assert from "node:assert/strict";
+          const x=JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP+"/match-review.json"));
+          assert.equal(x.items,55);
+          assert.equal(x.auto_merged,0);
+          assert.ok(x.hints.every(h=>h.action==="REVIEW_ONLY"));
+          console.log("MATCHING_REVIEW_ONLY=PASS");
+          '
+          echo COMPARADOR_TESTS_AND_GATES=PASS
+      - name: Verify actual HTTP and paginated search API
         run: |
           set -euo pipefail
           PORT=4173 node server.mjs > "$RUNNER_TEMP/server.log" 2>&1 &
@@ -41,24 +52,26 @@ jobs:
             sleep 1
           done
           test "$ok" -eq 1
-          curl -fsS 'http://127.0.0.1:4173/' -o "$RUNNER_TEMP/index.html"
-          curl -fsS 'http://127.0.0.1:4173/styles.css' -o "$RUNNER_TEMP/styles.css"
-          curl -fsS 'http://127.0.0.1:4173/app.js' -o "$RUNNER_TEMP/app.js"
-          curl -fsS 'http://127.0.0.1:4173/api/catalog?source=amazon' -o "$RUNNER_TEMP/amazon.json"
-          curl -fsS 'http://127.0.0.1:4173/api/catalog?source=awin' -o "$RUNNER_TEMP/awin.json"
-          node --input-type=module -e '
-          import fs from "node:fs";
-          import assert from "node:assert/strict";
-          const dir = process.env.RUNNER_TEMP;
-          for (const source of ["amazon","awin"]) {
-            const cat = JSON.parse(fs.readFileSync(dir+"/"+source+".json","utf8"));
-            assert.equal(cat.mode,"demo");
-            assert.equal(cat.source,source);
-            assert.equal(cat.products.length,15);
-            assert.ok(cat.products.every(p => p.canBuy === false && p.affiliateUrl === null));
-            assert.ok(new Set(cat.products.map(p=>p.category)).size >= 3);
-          }
-          assert.ok(fs.readFileSync(dir+"/index.html","utf8").includes("noindex"));
-          console.log("COMPARADOR_CATALOG_SECURITY=PASS");
-          '
-          echo COMPARADOR_HTTP_SMOKE=PASS
+          for path in / /pro.css /pro.js /robots.txt '/api/search?source=amazon&limit=12' '/api/search?source=awin&category=fritadeiras' '/api/categories?source=amazon' '/api/product?source=amazon&id=demo-amazon-fritadeiras-1'; do
+            curl -fsS "http://127.0.0.1:4173$path" -o /dev/null
+          done
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          const url='http://127.0.0.1:4173';
+          const get=async p=>(await fetch(url+p)).json();
+          const h=await get('/health');
+          assert.equal(h.status,'ok');
+          assert.equal(h.catalog.count.amazon,55);
+          const a=await get('/api/search?source=amazon&limit=12');
+          assert.equal(a.total,55);
+          assert.equal(a.items.length,12);
+          assert.ok(a.items.every(p=>!p.canBuy&&p.affiliateUrl===null));
+          const b=await get('/api/search?source=awin&category=fritadeiras');
+          assert.equal(b.total,5);
+          const categories=await get('/api/categories?source=amazon');
+          assert.equal(categories.total,55);
+          assert.equal(categories.categories.length,6);
+          const page=await (await fetch(url+'/')).text();
+          assert.ok(page.includes('noindex')&&page.includes('pro.js'));
+          console.log('COMPARADOR_HTTP_SEARCH=PASS');
+          NODE

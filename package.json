@@ -1,16 +1,19 @@
 {
   "name": "comparador-afiliados-pt",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "Comparador Amazon-first com plano B Awin e ativacao comercial controlada",
+  "description": "Comparador de produtos PT com pesquisa indexada, taxonomia e integracoes condicionais Awin / PartnerBoost",
   "scripts": {
     "start": "node server.mjs",
     "test": "node --test tests/*.test.mjs",
     "sync:amazon": "node scripts/sync-partnerboost.mjs",
     "import:awin": "node scripts/import-awin-csv.mjs",
-    "approve": "node scripts/approve.mjs"
+    "approve": "node scripts/approve.mjs",
+    "audit:matching": "node scripts/match-review.mjs"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "license": "UNLICENSED"
 }

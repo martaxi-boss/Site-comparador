@@ -286,3 +286,7 @@ img{max-width:100%;display:block}
  .card-title{min-height:auto}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+.aside-card:nth-child(1) .meter i{width:68%}
+.aside-card:nth-child(2) .meter i{width:90%}
+.aside-card:nth-child(3) .meter i{width:78%}

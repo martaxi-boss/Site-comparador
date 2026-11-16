@@ -290,3 +290,5 @@ img{max-width:100%;display:block}
 .aside-card:nth-child(1) .meter i{width:68%}
 .aside-card:nth-child(2) .meter i{width:90%}
 .aside-card:nth-child(3) .meter i{width:78%}
+
+.category-card small{display:block}

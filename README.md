@@ -120,3 +120,7 @@ Site-comparador/
 5. Testes de conversão e atribuição de comissão, não confundíveis com cliques internos.
 
 Veja também [PLANO_CATALOGO_PESQUISA.md](docs/PLANO_CATALOGO_PESQUISA.md).
+
+## Correção v0.2.1 — seleção automática de fonte
+
+A interface começa com `source=auto`. Quando existe um catálogo real autorizado com itens, escolhe primeiro Amazon (Plano A), caso contrário Awin (Plano B). Se houver catálogo Awin ativo, o catálogo Amazon fictício não é apresentado ao público, mesmo quando o pedido indica `source=amazon`. Se ambos estiverem ativos, a Amazon tem prioridade por omissão; Awin continua acessível por API autorizada. No ambiente de testes sem catálogos reais mantém-se a alternância Amazon/Awin fictícia. O novo comportamento é certificado por testes automáticos independentes antes da publicação.

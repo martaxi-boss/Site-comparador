@@ -1,19 +1,33 @@
 # Comparador Afiliados PT — base Amazon-first com Plano B Awin
 
-**Estado:** protótipo funcional local. **Não está publicado**, **não contém dados comerciais reais** e **não efetua vendas**. O nome visual "Compara+PT" é provisório, não corresponde a um domínio escolhido nem implica registo de marca.
+**Estado:** versão de demonstração **publicada em https://comparador-teste.duckdns.org/** com HTTPS válido (16/11/2026). **Não contém dados comerciais reais** e **não efetua vendas**. O nome visual "Compara+PT" é provisório, não corresponde a um domínio escolhido nem implica registo de marca.
 
 ## Objetivo
 
 Preparar um comparador para o público português, que permita comparar **2 a 5 produtos concorrentes**, com **Amazon.es através do programa Awin–PartnerBoost** como preferência e **outras lojas da Awin** como plano alternativo. O comprador não cria conta neste comparador e conclui a compra no vendedor parceiro.
 
-O produto é independente de quaisquer outros projetos, repositórios ou sites existentes. Não foram alteradas contas, repositórios, DNS, VPS ou lojas online.
+O produto é independente de quaisquer outros projetos. O site de teste foi publicado na pasta isolada `/srv/projects/Site-comparador/`, com Node privado, serviço e configuração Nginx próprios. O DNS fornecido pelo proprietário já apontava para a VPS; não foram alteradas contas de afiliados ou lojas online.
+
+## Estado de publicação e provas (16/11/2026)
+
+- **Domínio de demonstração:** https://comparador-teste.duckdns.org/ (sem indexação, `robots.txt` e `noindex`). Não é um site comercial ativo.
+- **Código-fonte:** https://github.com/martaxi-boss/Site-comparador, branch `main`.
+- **Revisão fixada na implantação:** `17cb6cff3ef4defcca3327adf03761d6448262df`. O ambiente de teste não publica automaticamente qualquer alteração posterior sem testes e nova instalação.
+- **CI de código e endpoints de catálogo:** https://github.com/martaxi-boss/Site-comparador/actions/runs/43912719058 — PASS.
+- **Inspeção prévia real por SSH:** https://github.com/martaxi-boss/VPS/actions/runs/43912955775 — PASS, sem modificar outros serviços.
+- **Instalação inicial:** https://github.com/martaxi-boss/VPS/actions/runs/43913360163 — HTTP PASS e certificado emitido, mas a primeira leitura TLS apanhou o certificado anterior servido pelo Nginx. A proteção retirou o serviço do comparador (sem alterar outros projetos).
+- **Recuperação segura com validação HTTPS real:** https://github.com/martaxi-boss/VPS/actions/runs/43913709106 — PASS no domínio e nos endpoints; Low Cost Europa e Sexshop preservados.
+- **Pasta privada de aplicação na VPS:** `/srv/projects/Site-comparador/`; Node 22 dentro desta pasta, sem instalação global de aplicações.
+- **Regras de publicação:** apenas dados fictícios; nunca apresentar links, preços reais, comissões ou elegibilidade de envio para Portugal sem verificação e aprovação.
+
+**A documentação do Ferrari e os testes técnicos do servidor não certificam o desempenho comercial, a experiência visual completa ou a integração com afiliados reais.**
 
 ## Testar localmente
 
 Requer **Node.js >= 20**, sem dependências externas obrigatórias.
 
 ```bash
-cd comparador-afiliados-pt
+cd Site-comparador
 npm start
 ```
 
@@ -95,18 +109,18 @@ Se se quiser minimizar contas em vários vendedores, o Plano B pode limitar-se i
 
 - **Nenhuma parceria, comissão nem elegibilidade Amazon.es em Portugal foi certificada.**
 - **Nenhum produto real foi carregado** e os produtos demonstrativos **não são ofertas reais**.
-- O nome, domínio, logótipo, termos legais, políticas de privacidade e consentimentos ainda têm de ser decididos e personalizados.
+- O nome e logótipo são provisórios, o domínio `comparador-teste.duckdns.org` é **apenas de teste**; para lançamento público devem ser concluídos identidade definitiva, avisos legais, políticas de privacidade e consentimentos aplicáveis.
 - Não há painel administrativo, contas de utilizador, persistência de cliques, relatórios de vendas ou alertas de stock em produção.
 - É necessário definir política de atualização dos feeds, cadência de sincronização, limpeza de ofertas expiradas, monitorização de links e conformidade com as regras de apresentação de preços e imagens dos programas escolhidos.
 - O importador CSV é um ponto de partida; a Awin tem formatos de feeds diferentes (standard/enhanced) que exigirão adaptação aos cabeçalhos da parceria real.
 - Os URLs de aprovação são inseridos manualmente após verificação; o código não consegue certificar por si só comissões, stock, entregas nem requisitos contratuais.
 - A ordenação inicial é ilustrativa, e **não usa comissões como fator escondido**.
-- Para produção faltam domínio, HTTPS, proxy inverso e implantação de acordo com as regras de organização do utilizador. **Não instalar globalmente nem misturar com outras pastas/projetos.**
+- **O HTTPS, proxy inverso e serviço isolado do ambiente de teste já foram configurados e certificados na VPS**; o lançamento de produção com domínio definitivo e integração real mantém-se pendente. Não instalar aplicações ou dependências globalmente nem misturar projetos.
 
 ## Estrutura
 
 ```text
-comparador-afiliados-pt/
+Site-comparador/
 ├── public/                   # interface, CSS e JS
 ├── src/catalog.mjs           # normalizacao e seguranca dos links
 ├── src/providers/

@@ -60,8 +60,18 @@ export class CatalogSearch {
     }
     return this;
   }
+  // In the published storefront, only an approved, nonempty live catalog is eligible.
+  // Amazon is preferred; if unavailable, automatically use live Awin offers.
+  // Demo catalogs never become the public fallback once any live source exists.
+  resolveSource(source='auto'){
+    const live=['amazon','awin'].filter(s=>this.mode[s]==='live' && this.count[s]>0);
+    if(live.length){
+      return live.includes(source)?source:live[0];
+    }
+    return validSource(source);
+  }
   categoryCounts(source,q=''){
-    const valid=validSource(source);
+    const valid=this.resolveSource(source);
     const fts=ftsExpression(q);
     const where=['e.source=?'];const args=[valid];
     if(fts){where.push('e.id IN (SELECT id FROM docs WHERE docs MATCH ?)');args.push(fts);}
@@ -69,11 +79,11 @@ export class CatalogSearch {
     return Object.fromEntries(rows.map(r=>[r.id,r.count]));
   }
   categories(source,q=''){
-    const src=validSource(source); const counts=this.categoryCounts(src,q);
+    const src=this.resolveSource(source); const counts=this.categoryCounts(src,q);
     return {source:src,mode:this.mode[src],categories:categoryTree(counts),total:Object.values(counts).reduce((a,b)=>a+b,0)};
   }
   search(params={}){
-    const source=validSource(params.source);
+    const source=this.resolveSource(params.source);
     const q=String(params.q||'').slice(0,MAX_QUERY_LENGTH);
     const match=ftsExpression(q);
     const page=Math.min(1000,Math.max(1,Number.parseInt(params.page,10)||1));
@@ -99,7 +109,7 @@ export class CatalogSearch {
     return {source,mode:this.mode[source],query:q,category,sort,page,limit,total,pages:Math.max(1,Math.ceil(total/limit)),items,brands};
   }
   findById(source,id){
-    const src=validSource(source);
+    const src=this.resolveSource(source);
     const row=this.db.prepare('SELECT payload FROM entries WHERE id=? AND source=?').get(src+':'+String(id||''),src);
     return row?JSON.parse(row.payload):null;
   }

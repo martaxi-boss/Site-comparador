@@ -4,7 +4,6 @@ import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 import { createSearch } from './src/search-index.mjs';
-import { validSource } from './src/catalog.mjs';
 
 const root=dirname(fileURLToPath(import.meta.url));
 const search=await createSearch(root);
@@ -28,7 +27,7 @@ const srv=createServer(async(request,response)=>{
   try{
     if(request.method!=='GET'){json(response,405,{error:'Método não permitido'});return;}
     const path=parsed.pathname;const opts=parsed.searchParams;
-    const source=validSource(opts.get('source'));
+    const source=search.resolveSource(opts.get('source')||'auto');
     if(path==='/health'){json(response,200,{status:'ok',version:'0.2.0',catalog:search.status()});return;}
     if(path==='/api/categories'){
       json(response,200,search.categories(source,String(opts.get('q')||'')));

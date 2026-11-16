@@ -19,11 +19,11 @@ jobs:
         run: |
           set -euo pipefail
           npm install --ignore-scripts --no-audit --no-fund
-          node -e "console.log('PRODUCT_MATCHER_RESOLVED='+require('product-matcher/package.json').version)"
+          test -f src/vendor/product-matcher.mjs && echo PRODUCT_MATCHER_VENDOR=PASS
       - name: Run Node syntax, tests and commercial safety gates
         run: |
           set -euo pipefail
-          for file in server.mjs public/pro.js src/catalog.mjs src/taxonomy.mjs src/search-index.mjs scripts/match-review.mjs src/providers/*.mjs; do node --check "$file"; done
+          for file in server.mjs public/pro.js src/catalog.mjs src/taxonomy.mjs src/search-index.mjs scripts/match-review.mjs src/vendor/product-matcher.mjs src/providers/*.mjs; do node --check "$file"; done
           npm test
           test -f public/robots.txt
           grep -qi 'noindex' public/index.html

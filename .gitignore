@@ -1,0 +1,6 @@
+.env
+node_modules/
+data/draft-*.json
+data/active-*.json
+data/approval-*.csv
+.DS_Store

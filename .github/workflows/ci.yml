@@ -1,0 +1,64 @@
+name: Site-comparador - build and security smoke
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate source syntax and catalog gates
+        run: |
+          set -euo pipefail
+          node --check server.mjs
+          node --check public/app.js
+          node --check src/catalog.mjs
+          node --check src/providers/partnerboost.mjs
+          node --check src/providers/awin.mjs
+          npm test
+          test -f public/robots.txt
+          grep -qi 'noindex' public/index.html
+          test ! -f data/active-amazon.json
+          test ! -f data/active-awin.json
+          echo COMPARADOR_SOURCE_GATE=PASS
+      - name: Verify functional HTTP endpoints with simulated products
+        run: |
+          set -euo pipefail
+          PORT=4173 node server.mjs > "$RUNNER_TEMP/server.log" 2>&1 &
+          PID=$!
+          trap 'kill "$PID" 2>/dev/null || true' EXIT
+          ok=0
+          for i in $(seq 1 30); do
+            if curl -fsS 'http://127.0.0.1:4173/health' -o "$RUNNER_TEMP/health.json"; then ok=1; break; fi
+            sleep 1
+          done
+          test "$ok" -eq 1
+          curl -fsS 'http://127.0.0.1:4173/' -o "$RUNNER_TEMP/index.html"
+          curl -fsS 'http://127.0.0.1:4173/styles.css' -o "$RUNNER_TEMP/styles.css"
+          curl -fsS 'http://127.0.0.1:4173/app.js' -o "$RUNNER_TEMP/app.js"
+          curl -fsS 'http://127.0.0.1:4173/api/catalog?source=amazon' -o "$RUNNER_TEMP/amazon.json"
+          curl -fsS 'http://127.0.0.1:4173/api/catalog?source=awin' -o "$RUNNER_TEMP/awin.json"
+          node --input-type=module -e '
+          import fs from "node:fs";
+          import assert from "node:assert/strict";
+          const dir = process.env.RUNNER_TEMP;
+          for (const source of ["amazon","awin"]) {
+            const cat = JSON.parse(fs.readFileSync(dir+"/"+source+".json","utf8"));
+            assert.equal(cat.mode,"demo");
+            assert.equal(cat.source,source);
+            assert.equal(cat.products.length,15);
+            assert.ok(cat.products.every(p => p.canBuy === false && p.affiliateUrl === null));
+            assert.ok(new Set(cat.products.map(p=>p.category)).size >= 3);
+          }
+          assert.ok(fs.readFileSync(dir+"/index.html","utf8").includes("noindex"));
+          console.log("COMPARADOR_CATALOG_SECURITY=PASS");
+          '
+          echo COMPARADOR_HTTP_SMOKE=PASS

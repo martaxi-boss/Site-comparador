@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#132d36">
+  <meta name="description" content="Protótipo de comparador de produtos para Portugal, preparado para Amazon via Awin e outras lojas parceiras.">
+  <title>Comparador PT | Descubra a melhor escolha</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="Comparador PT — início">
+        <span class="brand-mark"><span class="mark-one"></span><span class="mark-two"></span><span class="mark-three"></span></span>
+        <span>compara<span class="brand-accent">+</span>PT <small>CONCEITO</small></span>
+      </a>
+      <nav aria-label="Navegacao principal"><a href="#catalogo">Explorar produtos</a><a href="#comparacao">Comparar</a><a href="#como-funciona">Como funciona</a></nav>
+      <span class="top-pill"><span class="pulse-dot"></span> Protótipo independente</span>
+    </div>
+  </header>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="short-line"></span> COMPARAÇÕES SIMPLES E TRANSPARENTES</span>
+          <h1>Escolher bem<br>não tem de ser <em>complicado.</em></h1>
+          <p>Veja até cinco produtos lado a lado, descubra as diferenças que realmente importam e compre na loja da sua preferência.</p>
+          <div class="hero-actions"><a href="#catalogo" class="primary-btn">Explorar comparações <span aria-hidden="true">↗</span></a><span class="quiet-label">Feito para compradores em Portugal</span></div>
+          <div class="hero-points"><span><b>01</b> Escolha a categoria</span><span><b>02</b> Compare até 5</span><span><b>03</b> Compre na loja</span></div>
+        </div>
+        <div class="hero-showcase" aria-label="Exemplo ilustrativo de comparacao de produtos">
+          <div class="showcase-top"><span class="showcase-kicker">COMPARAÇÃO INTELIGENTE</span><span class="showcase-circles"><i></i><i></i><i></i></span></div>
+          <div class="showcase-subtitle">Uma escolha mais clara.</div>
+          <div class="preview-rows"><div><span class="preview-icon">◈</span><span><strong>Produto A</strong><small>Comparação ilustrativa</small></span><span class="preview-bar bar-a"></span></div><div><span class="preview-icon">◉</span><span><strong>Produto B</strong><small>Comparação ilustrativa</small></span><span class="preview-bar bar-b"></span></div><div><span class="preview-icon">◇</span><span><strong>Produto C</strong><small>Comparação ilustrativa</small></span><span class="preview-bar bar-c"></span></div></div>
+          <div class="showcase-bottom"><span class="small-star">✳</span><span><strong>Menos tempo a pesquisar.</strong><small>Mais informação para decidir.</small></span><span class="arrow-circle">↗</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip"><div class="container trust-grid"><div><span class="trust-symbol">◎</span> Comparações objetivas</div><div><span class="trust-symbol">↔</span> Até 5 alternativas</div><div><span class="trust-symbol">⌁</span> Compras nas lojas parceiras</div></div></section>
+
+    <section class="catalog-section container" id="catalogo">
+      <div class="section-heading"><div><span class="eyebrow light">ESCOLHA MAIS INFORMADA</span><h2>Encontre a sua próxima escolha.</h2><p>Compare modelos da mesma categoria, sem abrir dezenas de páginas.</p></div><span class="step-label">01 / EXPLORAR</span></div>
+      <div class="source-panel"><div class="source-copy"><div class="source-label">ORIGEM DOS PRODUTOS</div><p>O comparador está preparado para trabalhar com a Amazon e, se necessário, com outras lojas parceiras.</p></div><div class="source-switch" role="group" aria-label="Origem de produtos"><button id="source-amazon" class="source-btn active" aria-pressed="true" type="button">Amazon <span class="source-tag">Plano A</span></button><button id="source-awin" class="source-btn" aria-pressed="false" type="button">Outras lojas <span class="source-tag">Plano B</span></button></div></div>
+      <div id="demo-notice" class="demo-notice"><span class="notice-icon">ⓘ</span><span><strong>Ambiente de demonstração.</strong> Os produtos, características e preços mostrados são fictícios. Não são ofertas reais nem links de compra.</span></div>
+      <div class="toolbar"><div class="search-field"><span aria-hidden="true">⌕</span><input id="search" aria-label="Pesquisar produtos" type="search" placeholder="Pesquisar um produto, marca ou característica..."></div><label class="sort-field">Ordenar por <select id="sort"><option value="recommended">Seleção inicial</option><option value="price-asc">Preço mais baixo</option><option value="price-desc">Preço mais alto</option><option value="name">Nome A–Z</option></select></label></div>
+      <div id="categories" class="category-chips" role="group" aria-label="Categorias de produtos"></div>
+      <div class="results-header"><div><h3 id="results-title">A carregar produtos...</h3><p id="results-caption"></p></div><div class="result-count" id="results-count"></div></div>
+      <div id="products" class="product-grid" aria-live="polite"></div>
+      <div class="catalog-footnote"><span>✳</span> O preço, o stock e a entrega serão confirmados junto do vendedor. As comparações não representam aconselhamento de compra personalizado.</div>
+    </section>
+
+    <section class="comparison-section" id="comparacao"><div class="container"><div class="section-heading"><div><span class="eyebrow light">LADO A LADO</span><h2>A diferença está nos detalhes.</h2><p>Selecione entre dois e cinco produtos para ver as características comparadas.</p></div><span class="step-label">02 / COMPARAR</span></div><div id="comparison-container"></div></div></section>
+
+    <section class="how-section container" id="como-funciona"><div class="section-heading"><div><span class="eyebrow light">COMO FUNCIONA</span><h2>Três passos. Uma decisão melhor.</h2></div><span class="step-label">03 / DECIDIR</span></div><div class="steps-grid"><article><span class="step-n">01</span><h3>Escolha uma categoria</h3><p>Explore produtos semelhantes com as características relevantes reunidas no mesmo sítio.</p></article><article><span class="step-n">02</span><h3>Compare os modelos</h3><p>Selecione quatro ou cinco alternativas e veja diferenças de preço e especificações.</p></article><article><span class="step-n">03</span><h3>Compre com confiança</h3><p>Quando houver parceria autorizada, siga o link para concluir a compra diretamente na loja.</p></article></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><div><span class="footer-logo">compara<span>+</span>PT</span><p>Um conceito independente para compras mais informadas.</p></div><div class="disclosure"><strong>Transparência de afiliação</strong><p>O projeto poderá receber comissões por compras realizadas através dos nossos links, sem custo adicional indicado por nós. A apresentação de ofertas depende de programas de afiliados aprovados.</p><small>Protótipo técnico — não é uma loja nem aceita pagamentos.</small></div></div></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

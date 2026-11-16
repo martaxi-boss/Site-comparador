@@ -28,7 +28,7 @@ const srv=createServer(async(request,response)=>{
     if(request.method!=='GET'){json(response,405,{error:'Método não permitido'});return;}
     const path=parsed.pathname;const opts=parsed.searchParams;
     const source=search.resolveSource(opts.get('source')||'auto');
-    if(path==='/health'){json(response,200,{status:'ok',version:'0.2.0',catalog:search.status()});return;}
+    if(path==='/health'){json(response,200,{status:'ok',version:'0.2.1',catalog:search.status()});return;}
     if(path==='/api/categories'){
       json(response,200,search.categories(source,String(opts.get('q')||'')));
       return;

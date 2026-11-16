@@ -1,0 +1,302 @@
+[
+  {
+    "id": "demo-awin-0-0",
+    "title": "Telemóvel de exemplo A",
+    "brand": "Marca fictícia A",
+    "category": "Telemóveis",
+    "group": "Telemóveis",
+    "merchant": "Loja fictícia A",
+    "price": 69,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Memória": "128 GB (ilustrativo)",
+      "Modelo": "Série A (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-0-1",
+    "title": "Telemóvel de exemplo B",
+    "brand": "Marca fictícia B",
+    "category": "Telemóveis",
+    "group": "Telemóveis",
+    "merchant": "Loja fictícia B",
+    "price": 101.5,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Memória": "128 GB (ilustrativo)",
+      "Modelo": "Série B (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-0-2",
+    "title": "Telemóvel de exemplo C",
+    "brand": "Marca fictícia C",
+    "category": "Telemóveis",
+    "group": "Telemóveis",
+    "merchant": "Loja fictícia C",
+    "price": 134,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Memória": "128 GB (ilustrativo)",
+      "Modelo": "Série C (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-0-3",
+    "title": "Telemóvel de exemplo D",
+    "brand": "Marca fictícia D",
+    "category": "Telemóveis",
+    "group": "Telemóveis",
+    "merchant": "Loja fictícia D",
+    "price": 166.5,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Memória": "128 GB (ilustrativo)",
+      "Modelo": "Série D (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-0-4",
+    "title": "Telemóvel de exemplo E",
+    "brand": "Marca fictícia E",
+    "category": "Telemóveis",
+    "group": "Telemóveis",
+    "merchant": "Loja fictícia E",
+    "price": 199,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Memória": "128 GB (ilustrativo)",
+      "Modelo": "Série E (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-1-0",
+    "title": "Fritadeira sem óleo de exemplo A",
+    "brand": "Marca fictícia A",
+    "category": "Air fryers",
+    "group": "Air fryers",
+    "merchant": "Loja fictícia A",
+    "price": 164,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Capacidade": "5 L (ilustrativo)",
+      "Modelo": "Série A (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-1-1",
+    "title": "Fritadeira sem óleo de exemplo B",
+    "brand": "Marca fictícia B",
+    "category": "Air fryers",
+    "group": "Air fryers",
+    "merchant": "Loja fictícia B",
+    "price": 196.5,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Capacidade": "5 L (ilustrativo)",
+      "Modelo": "Série B (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-1-2",
+    "title": "Fritadeira sem óleo de exemplo C",
+    "brand": "Marca fictícia C",
+    "category": "Air fryers",
+    "group": "Air fryers",
+    "merchant": "Loja fictícia C",
+    "price": 229,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Capacidade": "5 L (ilustrativo)",
+      "Modelo": "Série C (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-1-3",
+    "title": "Fritadeira sem óleo de exemplo D",
+    "brand": "Marca fictícia D",
+    "category": "Air fryers",
+    "group": "Air fryers",
+    "merchant": "Loja fictícia D",
+    "price": 261.5,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Capacidade": "5 L (ilustrativo)",
+      "Modelo": "Série D (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-1-4",
+    "title": "Fritadeira sem óleo de exemplo E",
+    "brand": "Marca fictícia E",
+    "category": "Air fryers",
+    "group": "Air fryers",
+    "merchant": "Loja fictícia E",
+    "price": 294,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Capacidade": "5 L (ilustrativo)",
+      "Modelo": "Série E (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-2-0",
+    "title": "Relógio inteligente de exemplo A",
+    "brand": "Marca fictícia A",
+    "category": "Smartwatches",
+    "group": "Smartwatches",
+    "merchant": "Loja fictícia A",
+    "price": 259,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Autonomia": "2 dias (ilustrativo)",
+      "Modelo": "Série A (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-2-1",
+    "title": "Relógio inteligente de exemplo B",
+    "brand": "Marca fictícia B",
+    "category": "Smartwatches",
+    "group": "Smartwatches",
+    "merchant": "Loja fictícia B",
+    "price": 291.5,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Autonomia": "2 dias (ilustrativo)",
+      "Modelo": "Série B (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-2-2",
+    "title": "Relógio inteligente de exemplo C",
+    "brand": "Marca fictícia C",
+    "category": "Smartwatches",
+    "group": "Smartwatches",
+    "merchant": "Loja fictícia C",
+    "price": 324,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Autonomia": "2 dias (ilustrativo)",
+      "Modelo": "Série C (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-2-3",
+    "title": "Relógio inteligente de exemplo D",
+    "brand": "Marca fictícia D",
+    "category": "Smartwatches",
+    "group": "Smartwatches",
+    "merchant": "Loja fictícia D",
+    "price": 356.5,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Autonomia": "2 dias (ilustrativo)",
+      "Modelo": "Série D (ilustrativo)"
+    },
+    "updatedAt": ""
+  },
+  {
+    "id": "demo-awin-2-4",
+    "title": "Relógio inteligente de exemplo E",
+    "brand": "Marca fictícia E",
+    "category": "Smartwatches",
+    "group": "Smartwatches",
+    "merchant": "Loja fictícia E",
+    "price": 389,
+    "currency": "EUR",
+    "availability": "unknown",
+    "affiliateApproved": false,
+    "shippingPortugal": false,
+    "affiliateUrl": null,
+    "imageUrl": null,
+    "specs": {
+      "Autonomia": "2 dias (ilustrativo)",
+      "Modelo": "Série E (ilustrativo)"
+    },
+    "updatedAt": ""
+  }
+]

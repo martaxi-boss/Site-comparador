@@ -1,7 +1,7 @@
 // Reutiliza product-matcher (MIT, JD Zárate) para sugerir pares a rever.
 // Nunca junta modelos automaticamente: a revisão de EAN/ASIN/MPN/variantes é obrigatória.
 import { readFile } from 'node:fs/promises';
-import { normalizeProductTitle, computeTitleSimilarity } from 'product-matcher';
+import { normalizeProductTitle, computeTitleSimilarity } from '../src/vendor/product-matcher.mjs';
 import { fold } from '../src/taxonomy.mjs';
 const path=process.argv[2];
 if(!path){console.error('Utilização: npm run audit:matching -- data/draft-amazon.json');process.exitCode=2;}
